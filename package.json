@@ -1,6 +1,6 @@
 {
   "name": "mrcp-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities to work with Media Resource Control Protocol",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/MayamaTakeshi/mrcp-utils/issues"
   },
-  "homepage": "https://github.com/MayamaTakeshi/mrcp-utils#readme"
+  "homepage": "https://github.com/MayamaTakeshi/mrcp-utils#readme",
+  "dependencies": {
+    "data-matching": "^1.23.4"
+  }
 }
