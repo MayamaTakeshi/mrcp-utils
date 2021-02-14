@@ -1,0 +1,23 @@
+{
+  "name": "mrcp-utils",
+  "version": "1.0.0",
+  "description": "Utilities to work with Media Resource Control Protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayamaTakeshi/mrcp-utils.git"
+  },
+  "keywords": [
+    "MRCP",
+    "SDP"
+  ],
+  "author": "MayamaTakeshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MayamaTakeshi/mrcp-utils/issues"
+  },
+  "homepage": "https://github.com/MayamaTakeshi/mrcp-utils#readme"
+}
