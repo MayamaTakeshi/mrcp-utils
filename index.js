@@ -6,11 +6,14 @@ const parse_sdp = (s) => {
 	var sdp = {
 		media: []
 	}
-	var lines = s.split("\r\n")
+	var lines = s.split("\n")
 	var media_id = -1
 	lines.forEach(line => {
 		var key = line.slice(0,1)
 		var val = line.slice(2)
+        if(val.slice(-1) == "\r") {
+            val = val.slice(0,-1)
+        }
 
 		switch(key) {
 		case 'c':
@@ -22,7 +25,12 @@ const parse_sdp = (s) => {
 			break
 		case 'm':
 			var m = val.split(" ")
-			assert(m.length >= 4)
+            var media = m[0]
+            if(media == 'application') {
+			    assert(m.length >= 4)
+            } else {
+			    assert(m.length >= 3)
+            }
 			media_id++
 			sdp.media[media_id] = {
 				type: m[0],
