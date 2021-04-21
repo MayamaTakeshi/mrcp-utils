@@ -27,9 +27,9 @@ const parse_sdp = (s) => {
 			var m = val.split(" ")
             var media = m[0]
             if(media == 'application') {
-			    assert(m.length >= 4)
-            } else {
 			    assert(m.length >= 3)
+            } else {
+			    assert(m.length >= 4)
             }
 			media_id++
 			sdp.media[media_id] = {
@@ -109,7 +109,6 @@ const offer_sdp_matcher = dm.partial_match({
 			type: 'application',
 			port: dm.collect('remote_mrcp_port'),
 			protocol: 'TCP/MRCPv2',
-			payloads: ["1"],
 			resource: dm.collect('resource'),
 			connection: dm.collect('connection'),
 		},
