@@ -66,11 +66,11 @@ const parse_sdp = (s) => {
 }
 
 
-const gen_offer_sdp = (resource_type, local_rtp_ip, local_rtp_port) => {
+const gen_offer_sdp = (resource_type, local_ip, local_rtp_port) => {
     return `v=0
-o=mrcp_client 5772550679930491611 4608916746797952899 IN IP4 ${local_rtp_ip}
+o=mrcp_client 5772550679930491611 4608916746797952899 IN IP4 ${local_ip}
 s=-
-c=IN IP4 ${local_rtp_ip}
+c=IN IP4 ${local_ip}
 t=0 0
 m=application 9 TCP/MRCPv2 1
 a=setup:active
@@ -103,7 +103,7 @@ const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, channel_ident
 
 
 const offer_sdp_matcher = dm.partial_match({
-    connection: { ip: dm.collect('remote_rtp_ip') },
+    connection: { ip: dm.collect('remote_ip') },
     media: dm.unordered_list([
         {
             type: 'application',

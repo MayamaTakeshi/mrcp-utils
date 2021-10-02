@@ -1,6 +1,6 @@
 {
   "name": "mrcp-utils",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Utilities to work with Media Resource Control Protocol",
   "main": "index.js",
   "scripts": {
