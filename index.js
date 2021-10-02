@@ -79,12 +79,12 @@ a=resource:${resource_type}
 a=cmid:1
 m=audio ${local_rtp_port} RTP/AVP 0
 a=rtpmap:0 PCMU/8000
-a=${resource_type == 'speechsynth' ? 'recvonly' : 'sendonly'}
+a=${resource_type.endsWith('synth') ? 'recvonly' : 'sendonly'}
 a=mid:1`.replace(/\n/g, "\r\n")
 }
 
 
-const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, uuid, resource) => {
+const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, channel_identifier, resource_type) => {
     return 'v=0\r\n' +
     `o=mrcp_server 1212606071011504954 4868540303632141964 IN IP4 ${local_ip}\r\n` +
     "s=-\r\n" +
@@ -93,11 +93,11 @@ const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, uuid, resourc
     `m=application ${mrcp_port} TCP/MRCPv2 1\r\n` +
     'a=setup:passive\r\n' +
     `a=connection:${connection}\r\n` +
-    `a=channel:${uuid}@${resource}\r\n` +
+    `a=channel:${channel_identifier}\r\n` +
     'a=cmid:1\r\n' +
     `m=audio ${rtp_port} RTP/AVP 0\r\n` +
     'a=rtpmap:0 PCMU/8000\r\n' +
-    `a=${resource == 'speechsynth' ? 'sendonly' : 'recvonly'}\r\n` +
+    `a=${resource_type.endsWith('synth') ? 'sendonly' : 'recvonly'}\r\n` +
     'a=mid:1\r\n'
 }
 
