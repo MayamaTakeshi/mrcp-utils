@@ -66,7 +66,10 @@ const parse_sdp = (s) => {
 }
 
 
-const gen_offer_sdp = (resource_type, local_ip, local_rtp_port) => {
+const gen_offer_sdp = (resource_type, local_ip, local_rtp_port, payloads) => {
+    const payload_ids = payloads.map(p => p.id).join(" ")
+    const rtpmaps = payloads.map(p => `a=rtpmap:${p.id} ${p.codec_name}/${p.clock_rate}`).join("\n")
+
     return `v=0
 o=mrcp_client 5772550679930491611 4608916746797952899 IN IP4 ${local_ip}
 s=-
@@ -77,14 +80,14 @@ a=setup:active
 a=connection:new
 a=resource:${resource_type}
 a=cmid:1
-m=audio ${local_rtp_port} RTP/AVP 0
-a=rtpmap:0 PCMU/8000
+m=audio ${local_rtp_port} RTP/AVP ${payload_ids}
+${rtpmaps}
 a=${resource_type.endsWith('synth') ? 'recvonly' : 'sendonly'}
 a=mid:1`.replace(/\n/g, "\r\n")
 }
 
 
-const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, channel_identifier, resource_type) => {
+const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, channel_identifier, resource_type, payload) => {
     return 'v=0\r\n' +
     `o=mrcp_server 1212606071011504954 4868540303632141964 IN IP4 ${local_ip}\r\n` +
     "s=-\r\n" +
@@ -95,8 +98,8 @@ const gen_answer_sdp = (local_ip, mrcp_port, rtp_port, connection, channel_ident
     `a=connection:${connection}\r\n` +
     `a=channel:${channel_identifier}\r\n` +
     'a=cmid:1\r\n' +
-    `m=audio ${rtp_port} RTP/AVP 0\r\n` +
-    'a=rtpmap:0 PCMU/8000\r\n' +
+    `m=audio ${rtp_port} RTP/AVP ${payload.id}\r\n` +
+    `a=rtpmap:${payload.id} ${payload.codec_name}/${payload.clock_rate}\r\n` +
     `a=${resource_type.endsWith('synth') ? 'sendonly' : 'recvonly'}\r\n` +
     'a=mid:1\r\n'
 }
